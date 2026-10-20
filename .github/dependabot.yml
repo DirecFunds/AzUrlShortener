@@ -5,16 +5,18 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" 
-    directory: "/src"
-    target-branch: "vnext"
-    schedule:
-      interval: "monthly"
-    assignees: 
-        - "fboucher"
-    reviewers: 
-        - "fboucher"
-    labels:
-        - dependencies
-        - Serverless-Backend      
+- package-ecosystem: "nuget"
+  directory: "/src"
+  target-branch: "vnext"
+  schedule:
+    interval: "monthly"
+  assignees:
+  - "fboucher"
+  reviewers:
+  - "fboucher"
+  labels:
+  - dependencies
+  - Serverless-Backend
 
+  cooldown:
+    default-days: 7

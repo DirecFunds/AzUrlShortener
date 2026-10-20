@@ -15,22 +15,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+        with:
+          persist-credentials: false
+      - name: Set up .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9  # v4
+        with:
+          dotnet-version: '9.0.x' # Adjust the version as needed
 
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '9.0.x' # Adjust the version as needed
+      - name: Clean up previous builds
+        run: dotnet clean src/AzUrlShortener.sln
 
-    - name: Clean up previous builds
-      run: dotnet clean src/AzUrlShortener.sln
+      - name: Install .NET Aspire workload
+        run: dotnet workload update && dotnet workload install aspire
 
-    - name: Install .NET Aspire workload
-      run: dotnet workload update && dotnet workload install aspire
+      - name: Restore dependencies
+        run: dotnet restore src/AzUrlShortener.sln
 
-    - name: Restore dependencies
-      run: dotnet restore src/AzUrlShortener.sln
-
-    - name: Build solution
-      run: dotnet build src/AzUrlShortener.sln --no-restore --configuration Release
+      - name: Build solution
+        run: dotnet build src/AzUrlShortener.sln --no-restore --configuration Release
+    permissions:
+      contents: read
+      packages: read
+permissions:
+  contents: read
